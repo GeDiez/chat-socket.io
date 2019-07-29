@@ -1,0 +1,12 @@
+{
+  "name": "chat-socketio",
+  "version": "0.0.1",
+  "description": "create a chat example using socket io",
+  "main": "index.js",
+  "author": "Gibran LM(Gediez)",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.2.0"
+  }
+}
