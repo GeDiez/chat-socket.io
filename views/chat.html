@@ -1,30 +1,92 @@
-<h1>HELLO WORLD!</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+  <style>
+    html {
+      height: 100%;
+    }
 
-<h2>Message history</h2>
-<ul id="message-history">
-</ul>
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 20px 10px;
+    }
 
-<form id="send-message">
-  <label for="message">Send a message to the group</label>
-  <input id="message" type="text">
-</form>
+    .chatPanel {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+    }
 
-<script src="/socket.io/socket.io.js"></script>
-<script src="chat-cli.js"></script>
-<script>
-  const chat = chatCLI()
+    .chatPanel .panel-heading {
+      background-color: hsl(171, 100%, 41%);
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+    }
 
-  document.querySelector('#send-message').addEventListener('submit', function (event) {
-    event.preventDefault()
-    const msg = document.querySelector('#send-message #message').value
-    chat.message().send(msg)
-  })
+    .chatPanel .chatPanel-list {
+      flex: 1;
+      align-items: flex-start;
+    }
 
-  chat.message().onReceive(function (msg) {
-    const list = document.querySelector('#message-history')
-    const li = document.createElement('li')
-    li.appendChild(document.createTextNode(msg))
-    list
-      .appendChild(li)
-  })
-</script>
+    .chatPanel .chatPanel-list ul {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: flex-end;
+      overflow-y: scroll;
+      width: 100%;
+    }
+  </style>
+  <title>Document</title>
+</head>
+<body>
+  <h1 class="has-text-weight-bold">We Talk!</h1>
+  <div class="chatPanel panel">
+    <div class="panel-heading">
+      chat:
+    </div>
+    <div class="chatPanel-list panel-block">
+      <ul id="message-history">
+
+      </ul>
+    </div>
+  </div>
+
+  <form class="box" id="send-message">
+    <div class="field">
+      <label class="label" for="message">Send a message to the group</label>
+      <div class="control">
+        <input id="message" class="input" type="text" placeholder="type some funny">
+      </div>
+    </div>
+  </form>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="chat-cli.js"></script>
+  <script>
+    const chat = chatCLI()
+
+    document.querySelector('#send-message').addEventListener('submit', function (event) {
+      event.preventDefault()
+      const msg = document.querySelector('#send-message #message').value
+      document.querySelector('#send-message #message').value = ''
+      chat.message().send(msg)
+    })
+
+    chat.message().onReceive(function (msg) {
+      const list = document.querySelector('#message-history')
+      const li = document.createElement('li')
+      li.appendChild(document.createTextNode(msg))
+      list
+        .appendChild(li)
+    })
+  </script>
+</body>
+</html>

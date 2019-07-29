@@ -11,10 +11,8 @@ app.get('/', function(req, res){
 });
 
 socketio.on('connection', function(socket){
-  console.log('a user connected');
 
   socket.on('message::new', function(message) {
-    console.log('receive:', message)
     socketio.emit('chat::history', message)
   })
 
