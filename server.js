@@ -1,13 +1,7 @@
-const express = require('express')
-const app = express()
-const http = require('http').createServer(app)
-const socketio = require('socket.io')(http)
-
-// serving public assets
-app.use(express.static('assets'))
+const { app, socketio, runServer } = require('./config')
 
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/views/chat.html');
+  res.render('chat.pug')
 });
 
 socketio.on('connection', function(socket){
@@ -21,6 +15,5 @@ socketio.on('connection', function(socket){
   });
 });
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
-});
+// run server
+runServer()
