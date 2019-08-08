@@ -1,19 +1,20 @@
-const { app, socketio, runServer } = require('./config')
+const { app, socketio, runServer, express } = require('./config')
+const authServer = require('./auth-server')
+const expressjwt = require("express-jwt")
 
-app.get('/', function(req, res){
-  res.render('chat.pug')
-});
+const protectedRouter = require('./src/routes/protected')
+const publicRouter = require('./src/routes/public')
 
-socketio.on('connection', function(socket){
+// authenticate user middleware
+const jwtCheck = expressjwt({ secret: process.env.SECRET_JWT });
 
-  socket.on('message::new', function(message) {
-    socketio.emit('chat::history', message)
-  })
+// Add protected router to our main express-app
 
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
-  });
-});
+app.use('/', protectedRouter(express, socketio, jwtCheck))
+
+// Add public router to our main express-app
+
+app.use('/we_talk', publicRouter(express))
 
 // run server
 runServer()

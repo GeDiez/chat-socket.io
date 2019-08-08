@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+  <title>Sign in</title>
+</head>
+
+<body>
+  <section class="hero is-light is-fullheight">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <div class="column is-4 is-offset-4">
+          <h3 class="title has-text-grey">Login</h3>
+          <p class="subtitle has-text-grey">Please login to proceed.</p>
+          <div class="box">
+            <% if (flash) {%>
+              <div class="level">
+                <div class="notification <%= `is-${flash.status}` %>">
+                  <button class="delete"></button>
+                  <%= flash.message %>
+                </div>
+              </div>
+            <% } %>
+            <figure class="avatar">
+              <img src="/img/logo.png">
+            </figure>
+            <form id="sign-in-form">
+              <div class="field">
+                <div class="control">
+                  <input id="username" name="username" class="input" type="text" placeholder="username" autofocus="">
+                </div>
+              </div>
+              <div class="field">
+                <div class="control">
+                  <input id="password" name="password" class="input" type="password" placeholder="Your Password" autocomplete="current-password">
+                </div>
+              </div>
+              <button class="button is-block is-info is-large is-fullwidth">Login</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/login.js"></script>
+</body>
+
+</html>
